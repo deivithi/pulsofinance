@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -30,8 +31,8 @@ const Header = () => {
                 {link.label}
               </a>
             ))}
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground hover:bg-card">
-              Entrar
+            <Button variant="ghost" className="text-muted-foreground hover:text-foreground hover:bg-card" asChild>
+              <Link to="/login">Entrar</Link>
             </Button>
           </nav>
 
@@ -60,8 +61,8 @@ const Header = () => {
                 {link.label}
               </a>
             ))}
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground justify-start px-0">
-              Entrar
+            <Button variant="ghost" className="text-muted-foreground hover:text-foreground justify-start px-0" asChild>
+              <Link to="/login" onClick={() => setIsMenuOpen(false)}>Entrar</Link>
             </Button>
           </nav>
         </div>

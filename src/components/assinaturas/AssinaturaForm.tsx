@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -301,14 +302,17 @@ export function AssinaturaForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Categoria</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
+                  <Select 
+                    onValueChange={(value) => field.onChange(value === 'none' ? undefined : value)} 
+                    value={field.value || 'none'}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Sem categoria" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="">Sem categoria</SelectItem>
+                      <SelectItem value="none">Sem categoria</SelectItem>
                       {categorias?.map((cat) => (
                         <SelectItem key={cat.id} value={cat.id}>
                           <div className="flex items-center gap-2">
@@ -322,6 +326,14 @@ export function AssinaturaForm({
                       ))}
                     </SelectContent>
                   </Select>
+                  {(!categorias || categorias.length === 0) && (
+                    <p className="text-sm text-muted-foreground">
+                      Nenhuma categoria.{' '}
+                      <Link to="/categorias" className="text-primary hover:underline">
+                        Criar categorias
+                      </Link>
+                    </p>
+                  )}
                   <FormMessage />
                 </FormItem>
               )}
