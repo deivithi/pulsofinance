@@ -14,7 +14,139 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      assinaturas: {
+        Row: {
+          categoria_id: string | null
+          created_at: string | null
+          data_inicio: string
+          dia_cobranca: number
+          frequencia: string
+          id: string
+          nome: string
+          status: string | null
+          updated_at: string | null
+          user_id: string
+          valor: number
+        }
+        Insert: {
+          categoria_id?: string | null
+          created_at?: string | null
+          data_inicio: string
+          dia_cobranca: number
+          frequencia: string
+          id?: string
+          nome: string
+          status?: string | null
+          updated_at?: string | null
+          user_id: string
+          valor: number
+        }
+        Update: {
+          categoria_id?: string | null
+          created_at?: string | null
+          data_inicio?: string
+          dia_cobranca?: number
+          frequencia?: string
+          id?: string
+          nome?: string
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string
+          valor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assinaturas_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "categorias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      categorias: {
+        Row: {
+          cor: string | null
+          created_at: string | null
+          icone: string | null
+          id: string
+          nome: string
+          user_id: string
+        }
+        Insert: {
+          cor?: string | null
+          created_at?: string | null
+          icone?: string | null
+          id?: string
+          nome: string
+          user_id: string
+        }
+        Update: {
+          cor?: string | null
+          created_at?: string | null
+          icone?: string | null
+          id?: string
+          nome?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      parcelamentos: {
+        Row: {
+          categoria_id: string | null
+          created_at: string | null
+          data_inicio: string
+          descricao: string
+          dia_vencimento: number
+          id: string
+          parcelas_pagas: number | null
+          status: string | null
+          total_parcelas: number
+          updated_at: string | null
+          user_id: string
+          valor_parcela: number
+          valor_total: number
+        }
+        Insert: {
+          categoria_id?: string | null
+          created_at?: string | null
+          data_inicio: string
+          descricao: string
+          dia_vencimento: number
+          id?: string
+          parcelas_pagas?: number | null
+          status?: string | null
+          total_parcelas: number
+          updated_at?: string | null
+          user_id: string
+          valor_parcela: number
+          valor_total: number
+        }
+        Update: {
+          categoria_id?: string | null
+          created_at?: string | null
+          data_inicio?: string
+          descricao?: string
+          dia_vencimento?: number
+          id?: string
+          parcelas_pagas?: number | null
+          status?: string | null
+          total_parcelas?: number
+          updated_at?: string | null
+          user_id?: string
+          valor_parcela?: number
+          valor_total?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "parcelamentos_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "categorias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
