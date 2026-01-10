@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -327,6 +328,14 @@ export function ParcelamentoForm({
                       ))}
                     </SelectContent>
                   </Select>
+                  {categorias.length === 0 && (
+                    <p className="text-sm text-muted-foreground">
+                      Nenhuma categoria.{' '}
+                      <Link to="/categorias" className="text-primary hover:underline">
+                        Criar categorias
+                      </Link>
+                    </p>
+                  )}
                   <FormMessage />
                 </FormItem>
               )}

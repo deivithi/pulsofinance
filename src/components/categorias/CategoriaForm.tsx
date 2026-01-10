@@ -67,18 +67,30 @@ export function CategoriaForm({ open, onOpenChange, categoria }: CategoriaFormPr
   });
 
   useEffect(() => {
-    if (categoria) {
-      form.reset({
-        nome: categoria.nome,
-        cor: categoria.cor,
-      });
-    } else {
+    if (open) {
+      if (categoria) {
+        form.reset({
+          nome: categoria.nome,
+          cor: categoria.cor || '#6366F1',
+        });
+      } else {
+        form.reset({
+          nome: '',
+          cor: '#6366F1',
+        });
+      }
+    }
+  }, [categoria, open]);
+
+  const handleOpenChange = (newOpen: boolean) => {
+    if (!newOpen) {
       form.reset({
         nome: '',
         cor: '#6366F1',
       });
     }
-  }, [categoria, form]);
+    onOpenChange(newOpen);
+  };
 
   const onSubmit = async (values: FormData) => {
     const data = {
@@ -98,7 +110,7 @@ export function CategoriaForm({ open, onOpenChange, categoria }: CategoriaFormPr
   const isLoading = createCategoria.isPending || updateCategoria.isPending;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="glass-card border-white/10 sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-foreground">

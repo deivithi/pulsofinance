@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { CreditCard, Repeat, Calendar, Bell, LayoutDashboard } from "lucide-react";
 
 const features = [
@@ -33,9 +34,9 @@ const features = [
   },
 ];
 
-const FeaturesSection = () => {
+const FeaturesSection = forwardRef<HTMLElement>((props, ref) => {
   return (
-    <section id="recursos" className="py-24 sm:py-32 relative">
+    <section ref={ref} id="recursos" className="py-24 sm:py-32 relative">
       {/* Background effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl" />
@@ -88,6 +89,8 @@ const FeaturesSection = () => {
       </div>
     </section>
   );
-};
+});
+
+FeaturesSection.displayName = 'FeaturesSection';
 
 export default FeaturesSection;

@@ -1,6 +1,11 @@
 import { ArrowRight, Play } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
+  const scrollToFeatures = () => {
+    document.getElementById('recursos')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
       {/* Background gradient effects */}
@@ -23,12 +28,18 @@ const HeroSection = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-10 justify-center lg:justify-start">
-              <button className="btn-primary flex items-center justify-center gap-2 group">
+              <Link 
+                to="/cadastro" 
+                className="btn-primary flex items-center justify-center gap-2 group"
+              >
                 Começar Agora — É Grátis
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-              </button>
+              </Link>
               
-              <button className="btn-secondary flex items-center justify-center gap-2">
+              <button 
+                onClick={scrollToFeatures}
+                className="btn-secondary flex items-center justify-center gap-2"
+              >
                 <Play className="w-5 h-5" />
                 Ver Demo
               </button>
