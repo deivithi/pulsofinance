@@ -19,6 +19,7 @@ const pageTitles: Record<string, string> = {
   '/dashboard': 'Dashboard',
   '/parcelamentos': 'Parcelamentos',
   '/assinaturas': 'Assinaturas',
+  '/categorias': 'Categorias',
   '/configuracoes': 'Configurações',
 };
 
