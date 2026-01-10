@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, CreditCard, Repeat, Settings, X } from 'lucide-react';
+import { LayoutDashboard, CreditCard, Repeat, Tag, Settings, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
@@ -12,6 +12,7 @@ const menuItems = [
   { title: 'Dashboard', url: '/dashboard', icon: LayoutDashboard },
   { title: 'Parcelamentos', url: '/parcelamentos', icon: CreditCard },
   { title: 'Assinaturas', url: '/assinaturas', icon: Repeat },
+  { title: 'Categorias', url: '/categorias', icon: Tag },
   { title: 'Configurações', url: '/configuracoes', icon: Settings },
 ];
 

@@ -1,75 +1,134 @@
-import { Settings, User, Bell, Shield, Palette } from 'lucide-react';
+import { useState } from 'react';
+import { User, Bell, LogOut, Trash2, Mail, AlertTriangle } from 'lucide-react';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
+import { DeleteAccountDialog } from '@/components/configuracoes/DeleteAccountDialog';
 
 export default function Configuracoes() {
+  const { user, signOut } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+  const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Usuário';
+  const userEmail = user?.email || '';
+  const userInitial = userName.charAt(0).toUpperCase();
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast({
+      title: 'Até logo!',
+      description: 'Você foi desconectado com sucesso.',
+    });
+    navigate('/');
+  };
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 max-w-2xl">
       {/* Header */}
       <div>
-        <h2 className="text-3xl font-bold text-foreground mb-2">
-          Configurações
-        </h2>
-        <p className="text-muted-foreground">
-          Personalize sua experiência no Financify
-        </p>
+        <h2 className="text-3xl font-bold text-foreground mb-2">Configurações</h2>
+        <p className="text-muted-foreground">Gerencie sua conta e preferências</p>
       </div>
 
-      {/* Settings Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="glass-card rounded-2xl p-6 hover:border-primary/30 transition-all duration-300 cursor-pointer">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-              <User className="h-6 w-6 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-foreground">Perfil</h3>
-              <p className="text-sm text-muted-foreground">Gerencie suas informações pessoais</p>
+      {/* Perfil Section */}
+      <div className="glass-card rounded-2xl p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <User className="h-5 w-5 text-primary" />
+          <h3 className="text-lg font-semibold text-foreground">Perfil</h3>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <Avatar className="h-16 w-16 border-2 border-primary/20">
+            <AvatarFallback className="bg-primary/10 text-primary text-xl font-semibold">
+              {userInitial}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1 min-w-0">
+            <p className="text-lg font-medium text-foreground truncate">{userName}</p>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Mail className="h-4 w-4 flex-shrink-0" />
+              <span className="text-sm truncate">{userEmail}</span>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="glass-card rounded-2xl p-6 hover:border-primary/30 transition-all duration-300 cursor-pointer">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center">
-              <Bell className="h-6 w-6 text-purple-400" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-foreground">Notificações</h3>
-              <p className="text-sm text-muted-foreground">Configure alertas e lembretes</p>
-            </div>
-          </div>
+      {/* Preferências Section */}
+      <div className="glass-card rounded-2xl p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <Bell className="h-5 w-5 text-purple-400" />
+          <h3 className="text-lg font-semibold text-foreground">Preferências</h3>
         </div>
 
-        <div className="glass-card rounded-2xl p-6 hover:border-primary/30 transition-all duration-300 cursor-pointer">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center">
-              <Shield className="h-6 w-6 text-green-400" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-foreground">Segurança</h3>
-              <p className="text-sm text-muted-foreground">Altere sua senha e configurações de segurança</p>
-            </div>
-          </div>
+        <div className="text-center py-6">
+          <p className="text-muted-foreground text-sm">
+            Em breve: notificações, tema e outras preferências.
+          </p>
+        </div>
+      </div>
+
+      {/* Conta Section */}
+      <div className="glass-card rounded-2xl p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <AlertTriangle className="h-5 w-5 text-amber-400" />
+          <h3 className="text-lg font-semibold text-foreground">Conta</h3>
         </div>
 
-        <div className="glass-card rounded-2xl p-6 hover:border-primary/30 transition-all duration-300 cursor-pointer">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center">
-              <Palette className="h-6 w-6 text-orange-400" />
-            </div>
+        <div className="space-y-4">
+          {/* Logout */}
+          <div className="flex items-center justify-between py-3">
             <div>
-              <h3 className="text-lg font-semibold text-foreground">Aparência</h3>
-              <p className="text-sm text-muted-foreground">Personalize o visual do aplicativo</p>
+              <p className="font-medium text-foreground">Sair da conta</p>
+              <p className="text-sm text-muted-foreground">
+                Você será desconectado desta sessão
+              </p>
             </div>
+            <Button
+              variant="outline"
+              onClick={handleSignOut}
+              className="border-white/10 hover:bg-muted/50"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Sair
+            </Button>
+          </div>
+
+          <Separator className="bg-white/10" />
+
+          {/* Delete Account */}
+          <div className="flex items-center justify-between py-3">
+            <div>
+              <p className="font-medium text-destructive">Excluir conta</p>
+              <p className="text-sm text-muted-foreground">
+                Esta ação é permanente e irreversível
+              </p>
+            </div>
+            <Button
+              variant="destructive"
+              onClick={() => setDeleteDialogOpen(true)}
+            >
+              <Trash2 className="h-4 w-4 mr-2" />
+              Excluir
+            </Button>
           </div>
         </div>
       </div>
 
       {/* Version Info */}
-      <div className="text-center pt-8">
-        <p className="text-sm text-muted-foreground">
-          Financify v1.0.0
-        </p>
+      <div className="text-center pt-4">
+        <p className="text-sm text-muted-foreground">Financify v1.0.0</p>
       </div>
+
+      {/* Delete Account Dialog */}
+      <DeleteAccountDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+      />
     </div>
   );
 }
