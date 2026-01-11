@@ -3,8 +3,6 @@ import { forwardRef } from "react";
 const links = [
   { label: "Recursos", href: "#recursos" },
   { label: "Como Funciona", href: "#como-funciona" },
-  { label: "Privacidade", href: "#" },
-  { label: "Termos", href: "#" },
 ];
 
 const Footer = forwardRef<HTMLElement>((props, ref) => {

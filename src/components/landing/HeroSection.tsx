@@ -1,13 +1,14 @@
+import { forwardRef } from "react";
 import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const HeroSection = () => {
+const HeroSection = forwardRef<HTMLElement>((props, ref) => {
   const scrollToFeatures = () => {
     document.getElementById('recursos')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section ref={ref} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
       {/* Background gradient effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
@@ -111,6 +112,8 @@ const HeroSection = () => {
       </div>
     </section>
   );
-};
+});
+
+HeroSection.displayName = 'HeroSection';
 
 export default HeroSection;

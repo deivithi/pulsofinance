@@ -1,4 +1,4 @@
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { Menu, ChevronRight, LogOut, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 
 interface AppHeaderProps {
   onMenuClick: () => void;
@@ -25,10 +26,21 @@ const pageTitles: Record<string, string> = {
 
 export function AppHeader({ onMenuClick }: AppHeaderProps) {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, signOut } = useAuth();
+  const { toast } = useToast();
   
   const currentTitle = pageTitles[location.pathname] || 'Dashboard';
   const userInitial = user?.email?.charAt(0).toUpperCase() || 'U';
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast({
+      title: 'Até logo!',
+      description: 'Você foi desconectado com sucesso.',
+    });
+    navigate('/');
+  };
 
   return (
     <header className="h-16 glass-header sticky top-0 z-30 flex items-center justify-between px-4 md:px-8">
@@ -95,7 +107,7 @@ export function AppHeader({ onMenuClick }: AppHeaderProps) {
           <DropdownMenuSeparator className="bg-white/10" />
           <DropdownMenuItem
             className="text-destructive focus:text-destructive cursor-pointer"
-            onClick={signOut}
+            onClick={handleSignOut}
           >
             <LogOut className="h-4 w-4 mr-2" />
             <span>Sair</span>
