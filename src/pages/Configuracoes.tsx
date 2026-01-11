@@ -1,22 +1,23 @@
 import { useState } from 'react';
 import { User, Bell, LogOut, Trash2, Mail, AlertTriangle } from 'lucide-react';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { DeleteAccountDialog } from '@/components/configuracoes/DeleteAccountDialog';
+import { AvatarUpload } from '@/components/configuracoes/AvatarUpload';
+import { useProfile } from '@/hooks/useProfile';
 
 export default function Configuracoes() {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const { profile, updateProfile } = useProfile();
 
-  const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Usuário';
+  const userName = profile?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Usuário';
   const userEmail = user?.email || '';
-  const userInitial = userName.charAt(0).toUpperCase();
 
   const handleSignOut = async () => {
     await signOut();
@@ -43,11 +44,11 @@ export default function Configuracoes() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Avatar className="h-16 w-16 border-2 border-primary/20">
-            <AvatarFallback className="bg-primary/10 text-primary text-xl font-semibold">
-              {userInitial}
-            </AvatarFallback>
-          </Avatar>
+          <AvatarUpload
+            currentAvatarUrl={profile?.avatar_url}
+            userName={userName}
+            onAvatarChange={(url) => updateProfile({ avatar_url: url })}
+          />
           <div className="flex-1 min-w-0">
             <p className="text-lg font-medium text-foreground truncate">{userName}</p>
             <div className="flex items-center gap-2 text-muted-foreground">
