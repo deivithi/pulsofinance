@@ -17,8 +17,8 @@ const Header = forwardRef<HTMLElement>((props, ref) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a href="/" className="flex items-center">
-            <Logo size="md" />
+          <a href="/" className="flex items-center py-1">
+            <Logo size="lg" />
           </a>
 
           {/* Desktop Navigation */}

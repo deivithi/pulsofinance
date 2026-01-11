@@ -23,7 +23,7 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
   const NavContent = () => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className="p-6 flex items-center justify-between">
+      <div className="p-6 pb-8 flex items-center justify-between">
         <Link to="/dashboard" className="flex items-center">
           <Logo size="md" />
         </Link>
