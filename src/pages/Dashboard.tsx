@@ -195,7 +195,7 @@ export default function Dashboard() {
               <Wallet className="h-10 w-10 text-primary" />
             </div>
             <h3 className="text-2xl font-semibold text-foreground mb-3">
-              Bem-vindo ao Financify!
+              Bem-vindo ao Pulso!
             </h3>
             <p className="text-muted-foreground mb-8">
               Comece adicionando seu primeiro parcelamento ou assinatura para ter uma

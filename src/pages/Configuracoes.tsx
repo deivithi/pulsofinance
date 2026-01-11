@@ -121,7 +121,7 @@ export default function Configuracoes() {
 
       {/* Version Info */}
       <div className="text-center pt-4">
-        <p className="text-sm text-muted-foreground">Financify v1.0.0</p>
+        <p className="text-sm text-muted-foreground">Pulso v1.0.0</p>
       </div>
 
       {/* Delete Account Dialog */}

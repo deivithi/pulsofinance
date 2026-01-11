@@ -4,32 +4,32 @@ import { CreditCard, Repeat, Calendar, Bell, LayoutDashboard } from "lucide-reac
 const features = [
   {
     icon: CreditCard,
-    title: "Controle Total de Parcelas",
-    description: "Acompanhe cada parcela de compras no cartão, financiamentos e empréstimos. Saiba exatamente quanto falta pagar e quando cada compromisso termina.",
+    title: "Monitore cada parcela",
+    description: "Acompanhe o progresso em tempo real. Saiba exatamente onde você está.",
     large: true,
   },
   {
     icon: Repeat,
-    title: "Assinaturas Mapeadas",
-    description: "Visualize todos os seus serviços recorrentes em um só lugar. Netflix, Spotify, academia — tudo organizado.",
+    title: "Assinaturas mapeadas",
+    description: "Netflix, Spotify, academia... Tudo visível em um só lugar.",
     large: false,
   },
   {
     icon: Calendar,
-    title: "Visão do Mês",
-    description: "Calendário financeiro mostrando todos os vencimentos. Nunca mais seja pego de surpresa.",
+    title: "Visão do mês",
+    description: "Quanto sai da conta este mês? Resposta instantânea.",
     large: false,
   },
   {
     icon: Bell,
-    title: "Alertas Inteligentes",
-    description: "Receba lembretes antes dos vencimentos e notificações sobre mudanças importantes.",
+    title: "Sem sustos",
+    description: "Veja os próximos vencimentos antes que eles cheguem.",
     large: false,
   },
   {
     icon: LayoutDashboard,
-    title: "Dashboard Unificado",
-    description: "Uma visão completa e intuitiva de todos os seus compromissos financeiros. Gráficos claros, números que fazem sentido, decisões mais inteligentes.",
+    title: "Dashboard unificado",
+    description: "O pulso completo das suas finanças em uma tela.",
     large: true,
   },
 ];

@@ -54,9 +54,9 @@ export default function Login() {
         {/* Logo */}
         <Link to="/" className="flex items-center justify-center gap-2 mb-8">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center">
-            <span className="text-xl font-bold text-primary-foreground">F</span>
+            <span className="text-xl font-bold text-primary-foreground">P</span>
           </div>
-          <span className="text-2xl font-bold gradient-text">Financify</span>
+          <span className="text-2xl font-bold gradient-text">Pulso</span>
         </Link>
 
         {/* Card */}
