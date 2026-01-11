@@ -20,12 +20,12 @@ const HeroSection = forwardRef<HTMLElement>((props, ref) => {
           {/* Text Content */}
           <div className="text-center lg:text-left">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground leading-tight">
-              Seus parcelamentos e assinaturas.{" "}
-              <span className="gradient-text">Finalmente sob controle.</span>
+              Sinta o pulso das suas{" "}
+              <span className="gradient-text">finanças.</span>
             </h1>
             
             <p className="text-lg sm:text-xl text-muted-foreground mt-6 max-w-xl mx-auto lg:mx-0">
-              Visualize o impacto real dos seus compromissos financeiros. Sem planilhas. Sem surpresas.
+              Parcelamentos e assinaturas em um só lugar. Clareza total, zero surpresas.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-10 justify-center lg:justify-start">
@@ -42,7 +42,7 @@ const HeroSection = forwardRef<HTMLElement>((props, ref) => {
                 className="btn-secondary flex items-center justify-center gap-2"
               >
                 <Play className="w-5 h-5" />
-                Ver Demo
+                Ver como funciona
               </button>
             </div>
           </div>

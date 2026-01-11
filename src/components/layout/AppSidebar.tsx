@@ -25,9 +25,9 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
       <div className="p-6 flex items-center justify-between">
         <Link to="/dashboard" className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center">
-            <span className="text-xl font-bold text-primary-foreground">F</span>
+            <span className="text-xl font-bold text-primary-foreground">P</span>
           </div>
-          <span className="text-xl font-bold gradient-text">Financify</span>
+          <span className="text-xl font-bold gradient-text">Pulso</span>
         </Link>
         <Button
           variant="ghost"

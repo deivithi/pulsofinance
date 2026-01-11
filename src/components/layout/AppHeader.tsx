@@ -58,7 +58,7 @@ export function AppHeader({ onMenuClick }: AppHeaderProps) {
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm">
           <Link to="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">
-            Financify
+            Pulso
           </Link>
           <ChevronRight className="h-4 w-4 text-muted-foreground" />
           <span className="text-foreground font-medium">{currentTitle}</span>

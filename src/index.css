@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Financify Design System - Dark Glassmorphism Theme */
+/* Pulso Design System - Dark Glassmorphism Theme */
 
 @layer base {
   :root {
@@ -36,7 +36,7 @@
 
     --radius: 1rem;
 
-    /* Custom Financify tokens */
+    /* Custom Pulso tokens */
     --glass-bg: 240 6% 10% / 0.6;
     --glass-border: 0 0% 100% / 0.1;
     --gradient-primary: linear-gradient(to right, hsl(234 89% 74%), hsl(271 81% 56%));

@@ -12,7 +12,7 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo */}
           <a href="/" className="text-xl font-bold gradient-text">
-            Financify
+            Pulso
           </a>
 
           {/* Links */}
@@ -30,7 +30,7 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
 
           {/* Copyright */}
           <p className="text-sm text-muted-foreground">
-            © 2025 Financify
+            © 2026 Pulso
           </p>
         </div>
       </div>
