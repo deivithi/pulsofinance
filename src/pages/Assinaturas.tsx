@@ -19,6 +19,7 @@ import { AssinaturaSummaryCard } from '@/components/assinaturas/AssinaturaSummar
 import { AssinaturaCard } from '@/components/assinaturas/AssinaturaCard';
 import { AssinaturaForm } from '@/components/assinaturas/AssinaturaForm';
 import { CancelAssinaturaDialog } from '@/components/assinaturas/CancelAssinaturaDialog';
+import { GastosPorCategoriaChart } from '@/components/shared/GastosPorCategoriaChart';
 
 const calcularCustoMensal = (valor: number, frequencia: string) => {
   switch (frequencia) {
@@ -116,6 +117,28 @@ export default function Assinaturas() {
     };
   }, [assinaturas]);
 
+  // Gastos por categoria para o gráfico
+  const gastosPorCategoria = useMemo(() => {
+    const ativas = assinaturas.filter((a) => a.status === 'ativa');
+    const porCategoria = new Map<string, { categoria: string; valor: number; cor: string }>();
+
+    ativas.forEach((assinatura) => {
+      const categoriaId = assinatura.categoria_id || 'sem-categoria';
+      const categoriaNome = assinatura.categoria?.nome || 'Sem categoria';
+      const categoriaCor = assinatura.categoria?.cor || '#6B7280';
+      const custoMensal = calcularCustoMensal(assinatura.valor, assinatura.frequencia);
+
+      const atual = porCategoria.get(categoriaId) || { categoria: categoriaNome, valor: 0, cor: categoriaCor };
+      porCategoria.set(categoriaId, {
+        categoria: categoriaNome,
+        valor: atual.valor + custoMensal,
+        cor: categoriaCor,
+      });
+    });
+
+    return Array.from(porCategoria.values()).sort((a, b) => b.valor - a.valor);
+  }, [assinaturas]);
+
   const handleSubmit = (data: AssinaturaFormData) => {
     if (editingAssinatura) {
       updateAssinatura.mutate(
@@ -210,6 +233,13 @@ export default function Assinaturas() {
           loading={isLoading}
         />
       </div>
+
+      {/* Gráfico de Gastos por Categoria */}
+      <GastosPorCategoriaChart
+        dados={gastosPorCategoria}
+        isLoading={isLoading}
+        titulo="Custo Mensal por Categoria"
+      />
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4">

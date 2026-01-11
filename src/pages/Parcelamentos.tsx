@@ -17,6 +17,7 @@ import { DeleteParcelamentoDialog } from '@/components/parcelamentos/DeleteParce
 import { useParcelamentos, Parcelamento } from '@/hooks/useParcelamentos';
 import { useCategorias } from '@/hooks/useCategorias';
 import { useParcelamentoMutations } from '@/hooks/useParcelamentoMutations';
+import { GastosPorCategoriaChart } from '@/components/shared/GastosPorCategoriaChart';
 
 const formatCurrency = (value: number) =>
   new Intl.NumberFormat('pt-BR', {
@@ -89,6 +90,27 @@ export default function Parcelamentos() {
       parcelamentosAtivos,
       proximoVencimento,
     };
+  }, [parcelamentos]);
+
+  // Gastos por categoria para o gráfico
+  const gastosPorCategoria = useMemo(() => {
+    const ativos = parcelamentos.filter((p) => p.status === 'ativo');
+    const porCategoria = new Map<string, { categoria: string; valor: number; cor: string }>();
+
+    ativos.forEach((parcelamento) => {
+      const categoriaId = parcelamento.categoria_id || 'sem-categoria';
+      const categoriaNome = parcelamento.categoria?.nome || 'Sem categoria';
+      const categoriaCor = parcelamento.categoria?.cor || '#6B7280';
+
+      const atual = porCategoria.get(categoriaId) || { categoria: categoriaNome, valor: 0, cor: categoriaCor };
+      porCategoria.set(categoriaId, {
+        categoria: categoriaNome,
+        valor: atual.valor + parcelamento.valor_parcela,
+        cor: categoriaCor,
+      });
+    });
+
+    return Array.from(porCategoria.values()).sort((a, b) => b.valor - a.valor);
   }, [parcelamentos]);
 
   const handleOpenCreate = () => {
@@ -203,6 +225,13 @@ export default function Parcelamentos() {
           loading={isLoading}
         />
       </div>
+
+      {/* Gráfico de Gastos por Categoria */}
+      <GastosPorCategoriaChart
+        dados={gastosPorCategoria}
+        isLoading={isLoading}
+        titulo="Gastos Mensais por Categoria"
+      />
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4">
