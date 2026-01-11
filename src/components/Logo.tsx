@@ -7,10 +7,10 @@ interface LogoProps {
 }
 
 const sizeMap = {
-  sm: 'h-6',
-  md: 'h-8',
-  lg: 'h-10',
-  xl: 'h-14',
+  sm: 'h-7',      // 28px - Footer, contextos secundários
+  md: 'h-10',     // 40px - Header, Sidebar
+  lg: 'h-12',     // 48px - Destaques médios
+  xl: 'h-20',     // 80px - Telas de Auth (ponto focal)
 };
 
 export function Logo({ size = 'md', showText = true, className }: LogoProps) {
