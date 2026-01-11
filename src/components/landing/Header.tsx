@@ -2,6 +2,7 @@ import { forwardRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/Logo";
 
 const Header = forwardRef<HTMLElement>((props, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,8 +17,8 @@ const Header = forwardRef<HTMLElement>((props, ref) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a href="/" className="text-2xl font-bold gradient-text">
-            Pulso
+          <a href="/" className="flex items-center">
+            <Logo size="md" />
           </a>
 
           {/* Desktop Navigation */}
