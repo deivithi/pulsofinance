@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, CreditCard, Repeat, Tag, Settings, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Logo } from '@/components/Logo';
 
 interface AppSidebarProps {
   open: boolean;
@@ -23,11 +24,8 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
     <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="p-6 flex items-center justify-between">
-        <Link to="/dashboard" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center">
-            <span className="text-xl font-bold text-primary-foreground">P</span>
-          </div>
-          <span className="text-xl font-bold gradient-text">Pulso</span>
+        <Link to="/dashboard" className="flex items-center">
+          <Logo size="md" />
         </Link>
         <Button
           variant="ghost"

@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { Logo } from "@/components/Logo";
 
 const links = [
   { label: "Recursos", href: "#recursos" },
@@ -11,8 +12,8 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo */}
-          <a href="/" className="text-xl font-bold gradient-text">
-            Pulso
+          <a href="/" className="flex items-center">
+            <Logo size="sm" />
           </a>
 
           {/* Links */}
