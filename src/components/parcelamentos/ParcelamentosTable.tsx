@@ -74,8 +74,8 @@ export function ParcelamentosTable({
   }
 
   return (
-    <div className="glass-card rounded-2xl overflow-hidden">
-      <Table>
+    <div className="glass-card rounded-2xl overflow-hidden overflow-x-auto">
+      <Table className="min-w-[800px]">
         <TableHeader>
           <TableRow className="border-border/50 hover:bg-transparent">
             <TableHead className="text-muted-foreground">Descrição</TableHead>

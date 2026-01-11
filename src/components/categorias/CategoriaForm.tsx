@@ -80,7 +80,7 @@ export function CategoriaForm({ open, onOpenChange, categoria }: CategoriaFormPr
         });
       }
     }
-  }, [categoria, open]);
+  }, [categoria, open, form]);
 
   const handleOpenChange = (newOpen: boolean) => {
     if (!newOpen) {
