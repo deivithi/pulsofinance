@@ -139,7 +139,7 @@ export function ProximosVencimentos({
           </div>
 
           {showViewAll && hasMore && (
-            <div className="mt-4 pt-4 border-t border-white/5">
+            <div className="mt-4 pt-4 border-t border-border">
               <Button
                 variant="ghost"
                 className="w-full text-muted-foreground hover:text-foreground"

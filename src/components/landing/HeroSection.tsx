@@ -58,19 +58,19 @@ const HeroSection = forwardRef<HTMLElement>((props, ref) => {
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-card/80 rounded-xl p-4 border border-white/5">
+                  <div className="bg-card/80 rounded-xl p-4 border border-border">
                     <p className="text-xs text-muted-foreground">Parcelas</p>
                     <p className="text-2xl font-bold text-foreground mt-1">R$ 2.450</p>
                     <p className="text-xs text-primary mt-1">8 parcelas ativas</p>
                   </div>
-                  <div className="bg-card/80 rounded-xl p-4 border border-white/5">
+                  <div className="bg-card/80 rounded-xl p-4 border border-border">
                     <p className="text-xs text-muted-foreground">Assinaturas</p>
                     <p className="text-2xl font-bold text-foreground mt-1">R$ 387</p>
                     <p className="text-xs text-purple-400 mt-1">5 serviços</p>
                   </div>
                 </div>
 
-                <div className="bg-card/80 rounded-xl p-4 border border-white/5">
+                <div className="bg-card/80 rounded-xl p-4 border border-border">
                   <div className="flex justify-between items-center mb-3">
                     <span className="text-sm text-muted-foreground">Total Comprometido</span>
                     <span className="text-lg font-bold gradient-text">R$ 2.837</span>
@@ -89,7 +89,7 @@ const HeroSection = forwardRef<HTMLElement>((props, ref) => {
                     { name: "Celular (3/12)", date: "10 Jan", value: "R$ 299,00" },
                     { name: "Spotify", date: "15 Jan", value: "R$ 21,90" },
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
+                    <div key={i} className="flex items-center justify-between py-2 border-b border-border last:border-0">
                       <div className="flex items-center gap-3">
                         <div className="w-2 h-2 rounded-full bg-primary" />
                         <span className="text-sm text-foreground">{item.name}</span>

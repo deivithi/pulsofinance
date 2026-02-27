@@ -32,7 +32,7 @@ export function DeleteCategoriaDialog({
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="glass-card border-white/10">
+      <AlertDialogContent className="glass-card border-border">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-foreground">
             Excluir categoria
@@ -43,7 +43,7 @@ export function DeleteCategoriaDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="border-white/10 hover:bg-muted/50">
+          <AlertDialogCancel className="border-border hover:bg-muted/50">
             Cancelar
           </AlertDialogCancel>
           <AlertDialogAction

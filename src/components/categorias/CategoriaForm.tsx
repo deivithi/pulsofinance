@@ -111,7 +111,7 @@ export function CategoriaForm({ open, onOpenChange, categoria }: CategoriaFormPr
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="glass-card border-white/10 sm:max-w-[425px]">
+      <DialogContent className="glass-card border-border sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-foreground">
             {isEditing ? 'Editar Categoria' : 'Nova Categoria'}
@@ -129,7 +129,7 @@ export function CategoriaForm({ open, onOpenChange, categoria }: CategoriaFormPr
                   <FormControl>
                     <Input
                       placeholder="Ex: Alimentação"
-                      className="bg-muted/50 border-white/10"
+                      className="bg-muted/50 border-border"
                       {...field}
                     />
                   </FormControl>
@@ -146,7 +146,7 @@ export function CategoriaForm({ open, onOpenChange, categoria }: CategoriaFormPr
                   <FormLabel>Cor</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger className="bg-muted/50 border-white/10">
+                      <SelectTrigger className="bg-muted/50 border-border">
                         <SelectValue placeholder="Selecione uma cor">
                           <div className="flex items-center gap-2">
                             <div
@@ -160,7 +160,7 @@ export function CategoriaForm({ open, onOpenChange, categoria }: CategoriaFormPr
                         </SelectValue>
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="glass-card border-white/10">
+                    <SelectContent className="glass-card border-border">
                       {CORES_PREDEFINIDAS.map((cor) => (
                         <SelectItem key={cor.valor} value={cor.valor}>
                           <div className="flex items-center gap-2">
@@ -184,7 +184,7 @@ export function CategoriaForm({ open, onOpenChange, categoria }: CategoriaFormPr
                 type="button"
                 variant="outline"
                 onClick={() => onOpenChange(false)}
-                className="border-white/10 hover:bg-muted/50"
+                className="border-border hover:bg-muted/50"
               >
                 Cancelar
               </Button>

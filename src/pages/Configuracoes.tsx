@@ -92,7 +92,7 @@ export default function Configuracoes() {
             <Button
               variant="outline"
               onClick={handleSignOut}
-              className="border-white/10 hover:bg-muted/50"
+              className="border-border hover:bg-muted/50"
             >
               <LogOut className="h-4 w-4 mr-2" />
               Sair

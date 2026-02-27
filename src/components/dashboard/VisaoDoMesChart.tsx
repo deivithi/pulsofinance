@@ -17,7 +17,7 @@ const formatCurrency = (value: number) =>
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-zinc-800 border border-white/10 rounded-lg px-3 py-2 shadow-xl">
+      <div className="bg-zinc-800 border border-border rounded-lg px-3 py-2 shadow-xl">
         <p className="text-sm font-medium text-foreground">
           {payload[0].payload.name}: {formatCurrency(payload[0].value)}
         </p>

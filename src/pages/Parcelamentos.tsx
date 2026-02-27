@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { CreditCard, Plus, DollarSign, Calendar, Clock, Search } from 'lucide-react';
+import { CreditCard, Plus, DollarSign, Calendar, Clock, Search, FileSpreadsheet, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -18,6 +18,9 @@ import { useParcelamentos, Parcelamento } from '@/hooks/useParcelamentos';
 import { useCategorias } from '@/hooks/useCategorias';
 import { useParcelamentoMutations } from '@/hooks/useParcelamentoMutations';
 import { GastosPorCategoriaChart } from '@/components/shared/GastosPorCategoriaChart';
+import { ExportButton } from '@/components/shared/ExportButton';
+import { exportParcelamentosCSV, downloadCSV } from '@/lib/exportUtils';
+import { exportParcelamentosPDF } from '@/lib/exportPdfUtils';
 
 const formatCurrency = (value: number) =>
   new Intl.NumberFormat('pt-BR', {
@@ -53,32 +56,32 @@ export default function Parcelamentos() {
   // Cálculos para os cards
   const summary = useMemo(() => {
     const ativos = parcelamentos.filter((p) => p.status === 'ativo');
-    
+
     const totalAtivo = ativos.reduce(
       (sum, p) => sum + p.valor_parcela * (p.total_parcelas - p.parcelas_pagas),
       0
     );
-    
+
     const parcelaMes = ativos.reduce((sum, p) => sum + p.valor_parcela, 0);
-    
+
     const parcelamentosAtivos = ativos.length;
-    
+
     // Próximo vencimento
     const today = new Date();
     const currentDay = today.getDate();
-    
+
     let proximoVencimento: Date | null = null;
-    
+
     for (const p of ativos) {
       const dia = p.dia_vencimento;
       let nextDate: Date;
-      
+
       if (dia >= currentDay) {
         nextDate = new Date(today.getFullYear(), today.getMonth(), dia);
       } else {
         nextDate = new Date(today.getFullYear(), today.getMonth() + 1, dia);
       }
-      
+
       if (!proximoVencimento || nextDate < proximoVencimento) {
         proximoVencimento = nextDate;
       }
@@ -178,20 +181,47 @@ export default function Parcelamentos() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold text-foreground mb-2">Parcelamentos</h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1">Parcelamentos</h2>
+          <p className="text-muted-foreground text-sm md:text-base">
             Gerencie todos os seus parcelamentos em um só lugar
           </p>
         </div>
-        <Button
-          onClick={handleOpenCreate}
-          className="bg-indigo-500 hover:bg-indigo-600"
-        >
-          <Plus className="h-5 w-5 mr-2" />
-          Novo Parcelamento
-        </Button>
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <ExportButton
+            options={[
+              {
+                label: 'Exportar PDF',
+                description: 'Relatório visual premium',
+                icon: FileText,
+                onClick: () => exportParcelamentosPDF(parcelamentos),
+              },
+              {
+                label: 'Exportar Ativos (CSV)',
+                description: 'Apenas parcelamentos ativos',
+                icon: FileSpreadsheet,
+                onClick: () => {
+                  const ativos = parcelamentos.filter(p => p.status === 'ativo');
+                  downloadCSV(exportParcelamentosCSV(ativos), 'parcelamentos_ativos');
+                },
+              },
+              {
+                label: 'Exportar Todos (CSV)',
+                description: 'Todos os parcelamentos',
+                icon: FileSpreadsheet,
+                onClick: () => downloadCSV(exportParcelamentosCSV(parcelamentos), 'parcelamentos_todos'),
+              },
+            ]}
+          />
+          <Button
+            onClick={handleOpenCreate}
+            className="bg-indigo-500 hover:bg-indigo-600 flex-1 sm:flex-initial"
+          >
+            <Plus className="h-5 w-5 mr-2" />
+            Novo Parcelamento
+          </Button>
+        </div>
       </div>
 
       {/* Summary Cards */}

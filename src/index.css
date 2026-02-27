@@ -6,44 +6,51 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* Light Mode — Tema Claro Profissional */
+    --background: 0 0% 98%;
+    --foreground: 240 10% 10%;
 
-    --card: 240 6% 10%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
 
-    --popover: 240 6% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
 
-    --primary: 234 89% 74%;
-    --primary-foreground: 240 10% 3.9%;
+    --primary: 234 89% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 239 84% 67%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 239 84% 60%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 240 6% 10%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 240 5% 93%;
+    --muted-foreground: 240 5% 45%;
 
-    --accent: 234 89% 74%;
-    --accent-foreground: 240 10% 3.9%;
+    --accent: 234 89% 95%;
+    --accent-foreground: 234 89% 40%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 100% / 0.05;
-    --input: 240 6% 10%;
-    --ring: 234 89% 74%;
+    --border: 240 6% 90%;
+    --input: 240 6% 93%;
+    --ring: 234 89% 60%;
 
     --radius: 1rem;
 
-    /* Custom Pulso tokens */
-    --glass-bg: 240 6% 10% / 0.6;
-    --glass-border: 0 0% 100% / 0.1;
-    --gradient-primary: linear-gradient(to right, hsl(234 89% 74%), hsl(271 81% 56%));
-    --gradient-cta: linear-gradient(to right, hsl(239 84% 67%), hsl(271 81% 56%));
+    /* Cores semânticas */
+    --success: 142 76% 36%;
+    --warning: 38 92% 50%;
+    --info: 210 92% 60%;
+
+    /* Custom Pulso tokens — Light */
+    --glass-bg: 0 0% 100% / 0.8;
+    --glass-border: 240 6% 90% / 0.5;
+    --gradient-primary: linear-gradient(to right, hsl(234 89% 60%), hsl(271 81% 56%));
+    --gradient-cta: linear-gradient(to right, hsl(239 84% 60%), hsl(271 81% 56%));
   }
 
   .dark {
+    /* Dark Mode — Glassmorphism Original */
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
 
@@ -71,6 +78,17 @@
     --border: 0 0% 100% / 0.05;
     --input: 240 6% 10%;
     --ring: 234 89% 74%;
+
+    /* Cores semânticas */
+    --success: 142 76% 46%;
+    --warning: 38 92% 56%;
+    --info: 210 92% 68%;
+
+    /* Custom Pulso tokens — Dark */
+    --glass-bg: 240 6% 10% / 0.6;
+    --glass-border: 0 0% 100% / 0.1;
+    --gradient-primary: linear-gradient(to right, hsl(234 89% 74%), hsl(271 81% 56%));
+    --gradient-cta: linear-gradient(to right, hsl(239 84% 67%), hsl(271 81% 56%));
   }
 }
 
@@ -87,29 +105,46 @@
 
 @layer components {
   .glass-card {
-    @apply bg-card/60 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/20;
+    @apply bg-card/60 backdrop-blur-xl border border-border shadow-2xl shadow-black/10 dark:shadow-black/20;
   }
 
   .glass-header {
-    @apply bg-background/80 backdrop-blur-xl border-b border-white/5;
+    @apply bg-background/80 backdrop-blur-xl border-b border-border;
   }
 
   .gradient-text {
-    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400;
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500 dark:to-purple-400;
   }
 
   .btn-primary {
-    @apply bg-gradient-to-r from-secondary to-purple-500 text-white px-8 py-4 rounded-xl font-semibold 
-           hover:scale-105 hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 ease-out;
+    @apply bg-gradient-to-r from-secondary to-purple-500 text-white px-8 py-4 rounded-xl font-semibold hover:scale-105 hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 ease-out;
   }
 
   .btn-secondary {
-    @apply border border-muted-foreground/30 text-muted-foreground hover:bg-card hover:text-foreground 
-           px-6 py-4 rounded-xl transition-all duration-300 ease-out;
+    @apply border border-muted-foreground/30 text-muted-foreground hover:bg-card hover:text-foreground px-6 py-4 rounded-xl transition-all duration-300 ease-out;
   }
 
   .feature-card {
-    @apply glass-card rounded-2xl p-6 hover:scale-[1.02] hover:border-primary/30 
-           transition-all duration-300 ease-out cursor-default;
+    @apply glass-card rounded-2xl p-6 hover:scale-[1.02] hover:border-primary/30 transition-all duration-300 ease-out cursor-default;
+  }
+
+  /* Shimmer skeleton animation */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .skeleton-shimmer {
+    background: linear-gradient(90deg,
+        hsl(var(--muted)) 25%,
+        hsl(var(--muted-foreground) / 0.1) 50%,
+        hsl(var(--muted)) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
   }
 }

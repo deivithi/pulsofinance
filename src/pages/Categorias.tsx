@@ -86,7 +86,7 @@ export default function Categorias() {
             <Button
               onClick={handleNewCategoria}
               variant="outline"
-              className="border-white/10 hover:bg-muted/50"
+              className="border-border hover:bg-muted/50"
             >
               <Plus className="h-4 w-4 mr-2" />
               Criar Manualmente

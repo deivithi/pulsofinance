@@ -72,7 +72,7 @@ export function DeleteAccountDialog({ open, onOpenChange }: DeleteAccountDialogP
 
   return (
     <AlertDialog open={open} onOpenChange={handleOpenChange}>
-      <AlertDialogContent className="glass-card border-white/10">
+      <AlertDialogContent className="glass-card border-border">
         <AlertDialogHeader>
           <div className="flex items-center gap-3 mb-2">
             <div className="w-12 h-12 rounded-full bg-destructive/10 flex items-center justify-center">
@@ -102,13 +102,13 @@ export function DeleteAccountDialog({ open, onOpenChange }: DeleteAccountDialogP
             value={confirmText}
             onChange={(e) => setConfirmText(e.target.value)}
             placeholder="EXCLUIR"
-            className="mt-2 bg-muted/50 border-white/10"
+            className="mt-2 bg-muted/50 border-border"
             autoComplete="off"
           />
         </div>
 
         <AlertDialogFooter>
-          <AlertDialogCancel className="border-white/10 hover:bg-muted/50">
+          <AlertDialogCancel className="border-border hover:bg-muted/50">
             Cancelar
           </AlertDialogCancel>
           <Button

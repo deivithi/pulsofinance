@@ -8,7 +8,7 @@ interface QuickActionsProps {
 
 export function QuickActions({ onAddParcelamento, onAddAssinatura }: QuickActionsProps) {
   return (
-    <div className="fixed bottom-20 right-4 flex gap-2 z-50 md:bottom-6 md:right-6 md:gap-3">
+    <div className="fixed bottom-24 right-4 flex gap-2 z-40 md:bottom-6 md:right-6 md:gap-3">
       <Button
         onClick={onAddParcelamento}
         size="sm"

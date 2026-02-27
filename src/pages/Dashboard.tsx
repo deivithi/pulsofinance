@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { differenceInDays } from 'date-fns';
-import { Wallet, CreditCard, Repeat, Calendar, Plus } from 'lucide-react';
+import { Wallet, CreditCard, Repeat, Calendar, Plus, FileSpreadsheet, FileText, Download } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -16,6 +16,15 @@ import { EvolucaoMensalChart } from '@/components/dashboard/EvolucaoMensalChart'
 import { DistribuicaoCategoriaChart } from '@/components/dashboard/DistribuicaoCategoriaChart';
 import { ProjecaoFutura } from '@/components/dashboard/ProjecaoFutura';
 import { QuickActions } from '@/components/dashboard/QuickActions';
+import { NotificationBell } from '@/components/dashboard/NotificationBell';
+import { MetasFinanceiras } from '@/components/dashboard/MetasFinanceiras';
+import { ExportButton } from '@/components/shared/ExportButton';
+import { exportRelatoMensalCSV, downloadCSV } from '@/lib/exportUtils';
+import { exportRelatorioMensalPDF } from '@/lib/exportPdfUtils';
+import { useParcelamentos } from '@/hooks/useParcelamentos';
+import { useAssinaturas } from '@/hooks/useAssinaturas';
+import { InsightsInteligentes } from '@/components/dashboard/InsightsInteligentes';
+import { OnboardingGuiado } from '@/components/dashboard/OnboardingGuiado';
 import { ParcelamentoForm } from '@/components/parcelamentos/ParcelamentoForm';
 import { AssinaturaForm } from '@/components/assinaturas/AssinaturaForm';
 
@@ -31,6 +40,8 @@ export default function Dashboard() {
   const { profile } = useProfile();
   const { createParcelamento } = useParcelamentoMutations();
   const { createAssinatura } = useAssinaturaMutations();
+  const { data: parcelamentos = [] } = useParcelamentos();
+  const { data: assinaturas = [] } = useAssinaturas();
 
   // Filter states
   const [periodo, setPeriodo] = useState<PeriodoFiltro>('este-mes');
@@ -76,10 +87,10 @@ export default function Dashboard() {
   // Format next due date info
   const getProximoVencimentoInfo = () => {
     if (!proximoVencimento) return { subInfo: 'Nenhum vencimento', isUrgent: false };
-    
+
     const today = new Date();
     const daysUntil = differenceInDays(proximoVencimento.data, today);
-    
+
     if (daysUntil === 0) {
       return { subInfo: 'HOJE', isUrgent: true };
     } else if (daysUntil === 1) {
@@ -152,16 +163,43 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Header with Avatar */}
+      {/* Header with Avatar + Notifications */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <DashboardHeader user={user} avatarUrl={profile?.avatar_url} />
-        <DashboardFilters
-          periodo={periodo}
-          setPeriodo={setPeriodo}
-          categoriasSelecionadas={categoriasSelecionadas}
-          setCategoriasSelecionadas={setCategoriasSelecionadas}
-          categorias={categorias}
-        />
+        <div className="flex items-center gap-4">
+          <DashboardHeader user={user} avatarUrl={profile?.avatar_url} />
+          <NotificationBell items={proximosVencimentos.map(v => ({
+            id: v.id,
+            tipo: v.tipo,
+            nome: v.nome,
+            data: v.data,
+            valor: v.valor,
+          }))} />
+        </div>
+        <div className="flex items-center gap-2">
+          <ExportButton
+            options={[
+              {
+                label: 'Relatório Mensal (PDF)',
+                description: 'Relatório visual premium completo',
+                icon: FileText,
+                onClick: () => exportRelatorioMensalPDF(parcelamentos, assinaturas),
+              },
+              {
+                label: 'Relatório Mensal (CSV)',
+                description: 'Dados tabelados para planilha',
+                icon: FileSpreadsheet,
+                onClick: () => downloadCSV(exportRelatoMensalCSV(parcelamentos, assinaturas), 'relatorio_mensal'),
+              },
+            ]}
+          />
+          <DashboardFilters
+            periodo={periodo}
+            setPeriodo={setPeriodo}
+            categoriasSelecionadas={categoriasSelecionadas}
+            setCategoriasSelecionadas={setCategoriasSelecionadas}
+            categorias={categorias}
+          />
+        </div>
       </div>
 
       {/* Summary Cards - Bento Grid */}
@@ -227,9 +265,23 @@ export default function Dashboard() {
         <DistribuicaoCategoriaChart dados={distribuicaoCategoria} isLoading={isLoading} />
       </div>
 
+      {/* Insights Inteligentes */}
+      <InsightsInteligentes
+        totalParcelas={parcelamentosAtivos.valorRestante || 0}
+        totalAssinaturas={assinaturasAtivas.custoMensal || 0}
+        parcelamentosAtivos={parcelamentosAtivos.count || 0}
+        assinaturasAtivas={assinaturasAtivas.count || 0}
+        proximoVencimentoDias={
+          proximoVencimento
+            ? differenceInDays(proximoVencimento.data, new Date())
+            : undefined
+        }
+        evolucaoMensal={evolucaoMensal}
+      />
+
       {/* Upcoming Due Dates */}
-      <ProximosVencimentos 
-        items={proximosVencimentos} 
+      <ProximosVencimentos
+        items={proximosVencimentos}
         isLoading={isLoading}
         limit={5}
         showViewAll={true}
@@ -238,11 +290,20 @@ export default function Dashboard() {
       {/* Future Projection */}
       <ProjecaoFutura projecao={projecaoFutura} isLoading={isLoading} />
 
+      {/* Metas Financeiras */}
+      <MetasFinanceiras
+        totalParcelas={parcelamentosAtivos.valorRestante || 0}
+        totalAssinaturas={assinaturasAtivas.custoMensal || 0}
+      />
+
       {/* Quick Actions */}
       <QuickActions
         onAddParcelamento={() => setShowParcelamentoModal(true)}
         onAddAssinatura={() => setShowAssinaturaModal(true)}
       />
+
+      {/* Onboarding para novos usuários */}
+      <OnboardingGuiado />
 
       {/* Modals */}
       <ParcelamentoForm

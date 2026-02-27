@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/Logo";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Header = forwardRef<HTMLElement>((props, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,6 +33,7 @@ const Header = forwardRef<HTMLElement>((props, ref) => {
                 {link.label}
               </a>
             ))}
+            <ThemeToggle />
             <Button variant="ghost" className="text-muted-foreground hover:text-foreground hover:bg-card" asChild>
               <Link to="/login">Entrar</Link>
             </Button>
@@ -50,7 +52,7 @@ const Header = forwardRef<HTMLElement>((props, ref) => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden glass-card border-t border-white/5">
+        <div className="md:hidden glass-card border-t border-border">
           <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
             {navLinks.map((link) => (
               <a

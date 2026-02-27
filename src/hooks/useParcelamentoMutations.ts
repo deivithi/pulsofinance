@@ -65,9 +65,19 @@ export function useParcelamentoMutations() {
       if (!user) throw new Error('Usuário não autenticado');
 
       const updateData: Record<string, unknown> = { ...data };
-      
+
       if (data.valor_total && data.total_parcelas) {
         updateData.valor_parcela = data.valor_total / data.total_parcelas;
+      }
+
+      // Recalcular status automaticamente quando parcelas_pagas ou total_parcelas mudam
+      if (data.parcelas_pagas !== undefined || data.total_parcelas !== undefined) {
+        const parcelasPagas = data.parcelas_pagas ?? 0;
+        const totalParcelas = data.total_parcelas ?? 0;
+
+        if (totalParcelas > 0) {
+          updateData.status = parcelasPagas >= totalParcelas ? 'quitado' : 'ativo';
+        }
       }
 
       const { data: result, error } = await supabase
@@ -148,8 +158,8 @@ export function useParcelamentoMutations() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['parcelamentos'] });
-      const message = data.status === 'quitado' 
-        ? 'Parcelamento quitado! 🎉' 
+      const message = data.status === 'quitado'
+        ? 'Parcelamento quitado! 🎉'
         : 'Parcela marcada como paga!';
       toast({
         title: 'Sucesso!',

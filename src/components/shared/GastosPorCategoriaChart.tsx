@@ -118,7 +118,7 @@ export function GastosPorCategoriaChart({
                     </div>
 
                     {/* Bar container */}
-                    <div className="relative h-8 rounded-md bg-white/5 overflow-hidden">
+                    <div className="relative h-8 rounded-md bg-muted/30 overflow-hidden">
                       {/* Animated bar */}
                       <div
                         className="absolute inset-y-0 left-0 rounded-md transition-all duration-500 ease-out group-hover:brightness-110"
@@ -157,7 +157,7 @@ export function GastosPorCategoriaChart({
       </TooltipProvider>
 
       {/* Total footer */}
-      <div className="mt-6 pt-4 border-t border-white/10 flex justify-between items-center">
+      <div className="mt-6 pt-4 border-t border-border flex justify-between items-center">
         <span className="text-sm text-muted-foreground">Total</span>
         <span className="text-lg font-bold text-foreground">{formatCurrency(total)}</span>
       </div>

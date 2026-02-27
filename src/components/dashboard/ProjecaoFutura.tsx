@@ -23,7 +23,7 @@ export function ProjecaoFutura({ projecao, isLoading }: ProjecaoFuturaProps) {
 
   if (isLoading) {
     return (
-      <div className="rounded-2xl p-6 bg-gradient-to-br from-primary/20 via-purple-500/10 to-background border border-white/10">
+      <div className="rounded-2xl p-6 bg-gradient-to-br from-primary/20 via-purple-500/10 to-background border border-border">
         <div className="flex items-center gap-3 mb-6">
           <Skeleton className="h-10 w-10 rounded-lg" />
           <Skeleton className="h-5 w-48" />
@@ -42,7 +42,7 @@ export function ProjecaoFutura({ projecao, isLoading }: ProjecaoFuturaProps) {
   }
 
   return (
-    <div className="rounded-2xl p-6 bg-gradient-to-br from-primary/20 via-purple-500/10 to-background border border-white/10">
+    <div className="rounded-2xl p-6 bg-gradient-to-br from-primary/20 via-purple-500/10 to-background border border-border">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
@@ -71,9 +71,28 @@ export function ProjecaoFutura({ projecao, isLoading }: ProjecaoFuturaProps) {
                 {mes.mesCompleto}
               </span>
             </div>
-            <p className="text-2xl font-bold text-foreground mb-2">
+            <p className="text-2xl font-bold text-foreground mb-3 tabular-nums">
               {formatCurrency(mes.total)}
             </p>
+
+            {/* Barra de proporção parcelas vs assinaturas */}
+            <div className="w-full h-2 bg-muted/30 rounded-full overflow-hidden mb-3">
+              <div className="h-full flex">
+                {mes.parcelas > 0 && (
+                  <div
+                    className="h-full bg-primary transition-all duration-700 ease-out"
+                    style={{ width: `${(mes.parcelas / mes.total) * 100}%` }}
+                  />
+                )}
+                {mes.assinaturas > 0 && (
+                  <div
+                    className="h-full bg-purple-400 transition-all duration-700 ease-out"
+                    style={{ width: `${(mes.assinaturas / mes.total) * 100}%` }}
+                  />
+                )}
+              </div>
+            </div>
+
             <div className="flex items-center gap-3 text-xs text-muted-foreground">
               <span className="flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-primary" />
@@ -89,7 +108,7 @@ export function ProjecaoFutura({ projecao, isLoading }: ProjecaoFuturaProps) {
       </div>
 
       {/* Mobile total */}
-      <div className="mt-4 pt-4 border-t border-white/10 sm:hidden">
+      <div className="mt-4 pt-4 border-t border-border sm:hidden">
         <div className="flex items-center justify-between">
           <p className="text-sm text-muted-foreground">Total projetado</p>
           <p className="text-xl font-bold text-foreground">{formatCurrency(totalProjecao)}</p>

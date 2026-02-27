@@ -48,14 +48,14 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
                   to={item.url}
                   onClick={onClose}
                   className={cn(
-                    'flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ease-out',
+                    'flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 ease-out active:scale-[0.98]',
                     isActive
-                      ? 'bg-primary/10 text-primary border-l-2 border-primary'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      ? 'bg-primary/15 text-primary font-semibold shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
                   )}
                 >
-                  <item.icon className="h-5 w-5" />
-                  <span className="font-medium">{item.title}</span>
+                  <item.icon className={cn("h-5 w-5 transition-transform duration-300", isActive && "scale-110")} />
+                  <span>{item.title}</span>
                 </Link>
               </li>
             );
@@ -68,7 +68,7 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex md:flex-col md:w-64 bg-background border-r border-white/5 h-screen sticky top-0">
+      <aside className="hidden md:flex md:flex-col md:w-64 bg-background border-r border-border h-screen sticky top-0">
         <NavContent />
       </aside>
 
@@ -83,7 +83,7 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
       {/* Mobile Drawer */}
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 w-64 bg-background border-r border-white/5 z-50 transform transition-transform duration-300 ease-out md:hidden',
+          'fixed inset-y-0 left-0 w-64 bg-background border-r border-border z-50 transform transition-transform duration-300 ease-out md:hidden',
           open ? 'translate-x-0' : '-translate-x-full'
         )}
       >

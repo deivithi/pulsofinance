@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react';
+import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -41,69 +42,71 @@ function PageLoader() {
 }
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/cadastro" element={<Cadastro />} />
-            
-            {/* Protected Routes */}
-            <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
-              <Route
-                path="/dashboard"
-                element={
-                  <Suspense fallback={<PageLoader />}>
-                    <Dashboard />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/parcelamentos"
-                element={
-                  <Suspense fallback={<PageLoader />}>
-                    <Parcelamentos />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/assinaturas"
-                element={
-                  <Suspense fallback={<PageLoader />}>
-                    <Assinaturas />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/categorias"
-                element={
-                  <Suspense fallback={<PageLoader />}>
-                    <Categorias />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/configuracoes"
-                element={
-                  <Suspense fallback={<PageLoader />}>
-                    <Configuracoes />
-                  </Suspense>
-                }
-              />
-            </Route>
-            
-            {/* Catch-all */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AuthProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AuthProvider>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/cadastro" element={<Cadastro />} />
+
+              {/* Protected Routes */}
+              <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
+                <Route
+                  path="/dashboard"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <Dashboard />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/parcelamentos"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <Parcelamentos />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/assinaturas"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <Assinaturas />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/categorias"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <Categorias />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="/configuracoes"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <Configuracoes />
+                    </Suspense>
+                  }
+                />
+              </Route>
+
+              {/* Catch-all */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AuthProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ThemeProvider>
 );
 
 export default App;

@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Plus, Search, DollarSign, Repeat, Calendar } from 'lucide-react';
+import { Plus, Search, DollarSign, Repeat, Calendar, FileSpreadsheet, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
@@ -20,6 +20,9 @@ import { AssinaturaCard } from '@/components/assinaturas/AssinaturaCard';
 import { AssinaturaForm } from '@/components/assinaturas/AssinaturaForm';
 import { CancelAssinaturaDialog } from '@/components/assinaturas/CancelAssinaturaDialog';
 import { GastosPorCategoriaChart } from '@/components/shared/GastosPorCategoriaChart';
+import { ExportButton } from '@/components/shared/ExportButton';
+import { exportAssinaturasCSV, downloadCSV } from '@/lib/exportUtils';
+import { exportAssinaturasPDF } from '@/lib/exportPdfUtils';
 
 const calcularCustoMensal = (valor: number, frequencia: string) => {
   switch (frequencia) {
@@ -47,12 +50,12 @@ export default function Assinaturas() {
 
   // Include cancelled only when filtering for them specifically
   const includesCancelled = statusFilter === 'cancelada' || statusFilter === 'todas_incluindo_canceladas';
-  
+
   const { data: assinaturas = [], isLoading } = useAssinaturas({
     status: includesCancelled ? statusFilter : statusFilter,
     categoriaId: categoriaFilter,
   });
-  
+
   const { data: categorias = [] } = useCategorias();
   const { createAssinatura, updateAssinatura, toggleStatus, cancelAssinatura } = useAssinaturaMutations();
 
@@ -85,7 +88,7 @@ export default function Assinaturas() {
   // Summary calculations
   const summary = useMemo(() => {
     const ativas = assinaturas.filter((a) => a.status === 'ativa');
-    
+
     // Calculate total monthly cost
     const custoMensal = ativas.reduce((sum, a) => {
       return sum + calcularCustoMensal(a.valor, a.frequencia);
@@ -94,7 +97,7 @@ export default function Assinaturas() {
     // Find next charge
     const today = new Date();
     const currentDay = today.getDate();
-    
+
     let proximaCobranca: { data: Date; nome: string } | null = null;
 
     for (const a of ativas) {
@@ -194,17 +197,44 @@ export default function Assinaturas() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold text-foreground mb-2">Assinaturas</h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1">Assinaturas</h2>
+          <p className="text-muted-foreground text-sm md:text-base">
             Controle suas assinaturas e serviços recorrentes
           </p>
         </div>
-        <Button onClick={() => setFormOpen(true)} className="bg-indigo-500 hover:bg-indigo-600">
-          <Plus className="h-5 w-5 mr-2" />
-          Nova Assinatura
-        </Button>
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <ExportButton
+            options={[
+              {
+                label: 'Exportar PDF',
+                description: 'Relatório visual premium',
+                icon: FileText,
+                onClick: () => exportAssinaturasPDF(assinaturas),
+              },
+              {
+                label: 'Exportar Ativas (CSV)',
+                description: 'Apenas assinaturas ativas',
+                icon: FileSpreadsheet,
+                onClick: () => {
+                  const ativas = assinaturas.filter(a => a.status === 'ativa');
+                  downloadCSV(exportAssinaturasCSV(ativas), 'assinaturas_ativas');
+                },
+              },
+              {
+                label: 'Exportar Todas (CSV)',
+                description: 'Todas as assinaturas',
+                icon: FileSpreadsheet,
+                onClick: () => downloadCSV(exportAssinaturasCSV(assinaturas), 'assinaturas_todas'),
+              },
+            ]}
+          />
+          <Button onClick={() => setFormOpen(true)} className="bg-indigo-500 hover:bg-indigo-600 flex-1 sm:flex-initial">
+            <Plus className="h-5 w-5 mr-2" />
+            Nova Assinatura
+          </Button>
+        </div>
       </div>
 
       {/* Summary Cards */}

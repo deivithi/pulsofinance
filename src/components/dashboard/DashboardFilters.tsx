@@ -62,7 +62,7 @@ export function DashboardFilters({
       {/* Period Filter */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="gap-2 bg-card/60 border-white/10 hover:bg-card/80">
+          <Button variant="outline" className="gap-2 bg-card/60 border-border hover:bg-card/80">
             {selectedPeriodoLabel}
             <ChevronDown className="h-4 w-4 opacity-50" />
           </Button>
@@ -84,7 +84,7 @@ export function DashboardFilters({
       {/* Category Filter */}
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="gap-2 bg-card/60 border-white/10 hover:bg-card/80">
+          <Button variant="outline" className="gap-2 bg-card/60 border-border hover:bg-card/80">
             <Filter className="h-4 w-4" />
             Categorias
             {categoriasSelecionadas.length > 0 && (

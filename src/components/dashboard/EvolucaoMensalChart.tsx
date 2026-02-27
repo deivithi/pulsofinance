@@ -34,7 +34,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     const total = payload.reduce((sum: number, entry: any) => sum + entry.value, 0);
     return (
-      <div className="glass-card rounded-lg p-3 border border-white/10">
+      <div className="glass-card rounded-lg p-3 border border-border">
         <p className="text-sm font-medium text-foreground mb-2 capitalize">
           {payload[0]?.payload?.mesCompleto || label}
         </p>
@@ -52,7 +52,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
             <span className="font-medium text-foreground">{formatCurrency(entry.value)}</span>
           </div>
         ))}
-        <div className="border-t border-white/10 mt-2 pt-2 flex items-center justify-between">
+        <div className="border-t border-border mt-2 pt-2 flex items-center justify-between">
           <span className="text-sm text-muted-foreground">Total</span>
           <span className="text-sm font-bold text-foreground">{formatCurrency(total)}</span>
         </div>
@@ -102,18 +102,18 @@ export function EvolucaoMensalChart({ dados, isLoading }: EvolucaoMensalChartPro
                 <stop offset="95%" stopColor="hsl(271 81% 56%)" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(0 0% 100% / 0.05)" />
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" strokeOpacity={0.5} />
             <XAxis
               dataKey="mes"
               axisLine={false}
               tickLine={false}
-              tick={{ fill: 'hsl(240 5% 65%)', fontSize: 12 }}
+              tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
               style={{ textTransform: 'capitalize' }}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: 'hsl(240 5% 65%)', fontSize: 12 }}
+              tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
               tickFormatter={(value) => `R$${value / 1000}k`}
               width={60}
             />
@@ -133,6 +133,9 @@ export function EvolucaoMensalChart({ dados, isLoading }: EvolucaoMensalChartPro
               strokeWidth={2}
               fillOpacity={1}
               fill="url(#colorParcelamentos)"
+              animationBegin={0}
+              animationDuration={1000}
+              animationEasing="ease-out"
             />
             <Area
               type="monotone"
@@ -141,6 +144,9 @@ export function EvolucaoMensalChart({ dados, isLoading }: EvolucaoMensalChartPro
               strokeWidth={2}
               fillOpacity={1}
               fill="url(#colorAssinaturas)"
+              animationBegin={200}
+              animationDuration={1000}
+              animationEasing="ease-out"
             />
           </AreaChart>
         </ResponsiveContainer>

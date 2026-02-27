@@ -1,73 +1,83 @@
-# Welcome to your Lovable project
+# 💜 Pulso — Controle de Parcelamentos e Assinaturas
 
-## Project info
+> **Parcelamentos e assinaturas em um só lugar. Clareza total, zero surpresas.**
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Pulso é um app web de finanças pessoais que ajuda você a gerenciar todos os seus parcelamentos de cartão de crédito e assinaturas recorrentes (Netflix, Spotify, etc.) em um único dashboard visual e intuitivo.
 
-## How can I edit this code?
+## ✨ Funcionalidades
 
-There are several ways of editing your application.
+- 📊 **Dashboard interativo** com gráficos de gastos por categoria, evolução mensal e projeção futura
+- 💳 **Gestão de parcelamentos** — adicione, edite e acompanhe todas as suas parcelas
+- 🔄 **Gestão de assinaturas** — controle assinaturas mensais, trimestrais, semestrais e anuais
+- 🏷️ **Categorias personalizadas** — organize seus gastos com cores e ícones
+- 📅 **Próximos vencimentos** — saiba exatamente o que vence nos próximos dias
+- 🔐 **Autenticação segura** — login com e-mail/senha ou Google
+- 🌙 **Dark mode** — interface moderna com glassmorphism
 
-**Use Lovable**
+## 🛠️ Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+| Camada | Tecnologia |
+|--------|-----------|
+| Frontend | React 18 + TypeScript |
+| Build | Vite 5 |
+| Estilização | Tailwind CSS 3 |
+| Componentes | shadcn/ui (Radix) |
+| Backend/BD | Supabase (PostgreSQL) |
+| Roteamento | React Router DOM 6 |
+| Estado | TanStack React Query 5 |
+| Gráficos | Recharts |
+| Formulários | React Hook Form + Zod |
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🚀 Como rodar localmente
 
-**Use your preferred IDE**
+```bash
+# 1. Clone o repositório
+git clone https://github.com/deivithi/pulsofinance.git
+cd pulsofinance
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+# 2. Instale as dependências
+npm install
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# 3. Configure as variáveis de ambiente
+cp .env.example .env
+# Edite o .env com suas credenciais do Supabase
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 4. Rode o servidor de desenvolvimento
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+A aplicação estará disponível em `http://localhost:8080`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📁 Estrutura do Projeto
 
-**Use GitHub Codespaces**
+```
+src/
+├── components/
+│   ├── landing/        # Landing page (Header, Hero, Features, Footer)
+│   ├── dashboard/      # Dashboard (charts, cards, filtros)
+│   ├── parcelamentos/  # CRUD de parcelamentos
+│   ├── assinaturas/    # CRUD de assinaturas
+│   ├── categorias/     # CRUD de categorias
+│   ├── configuracoes/  # Perfil e configurações
+│   ├── layout/         # Layout (sidebar, header)
+│   └── ui/             # Componentes base (shadcn/ui)
+├── contexts/           # AuthContext (autenticação)
+├── hooks/              # Hooks customizados (queries + mutations)
+├── integrations/       # Cliente Supabase + tipos
+├── pages/              # Páginas da aplicação
+└── lib/                # Utilitários
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📝 Scripts
 
-## What technologies are used for this project?
+| Script | Comando | Descrição |
+|--------|---------|-----------|
+| Dev | `npm run dev` | Servidor de desenvolvimento |
+| Build | `npm run build` | Build de produção |
+| Lint | `npm run lint` | Verificação de código |
+| Test | `npm test` | Testes automatizados |
+| Preview | `npm run preview` | Preview do build |
 
-This project is built with:
+## 📄 Licença
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Projeto privado. Todos os direitos reservados.
